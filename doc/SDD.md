@@ -2254,7 +2254,7 @@ Seth Bourgeois</span>
 
 ## <span class="c15">2.1 Architectural Overview</span>
 
-<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 331.00px; height: 311.00px;">![](images/image5.png)</span>
+<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 331.00px; height: 311.00px;">![](./img/sddArchOverview.png)</span>
 
 <span class="c21">Our application has two ways in which users can interact with the bot. The first way will be through the discord interface, which is provided for us by Discord. This is communicated with by the Discord API. The bot application is then coded in a language of our choice which will control the bot’s interaction between the database and the interface. The Web GUI allows management of the bot through a browser. This connects to a backend which will communicate these changes to the bot application and to the Bot database.</span>
 
