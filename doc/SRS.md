@@ -468,7 +468,7 @@ Seth Bourgeois</span>
 
 ## <span class="c12 c4">2.4        Database Requirements</span>
 
-### <span class="c35">2.4.1 Concept Diagram</span><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 270.67px;">![](images/image1.png)</span>
+### <span class="c35">2.4.1 Concept Diagram</span><span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 270.67px;">![](img/srsDBOverview.png)</span>
 
 ### <span class="c2">2.4.2 Description of Requirements</span>
 
