@@ -2262,7 +2262,7 @@ Seth Bourgeois</span>
 
 ## <span class="c15">2.2 Sequence Diagrams</span>
 
-<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 273.33px;">![](images/image2.png)</span>
+<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 273.33px;">![](images/webGUISequence.png)</span>
 
 <span class="c9"></span>
 
@@ -2270,7 +2270,7 @@ Seth Bourgeois</span>
 
 <span class="c9"></span>
 
-<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 321.33px;">![](images/image3.png)</span>
+<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 321.33px;">![](images/discordInterSequence.png)</span>
 
 <span class="c9">When interacting with the bot through the discord interface, the user must type in a command. The bot application will then query the database to see if this command exists and once this is verified, it will query the database to ensure that the user has the proper permissions level in order to execute this command. Once these queries have been completed and all proper information has been verified, it will execute the command.</span>
 
@@ -2284,7 +2284,7 @@ Seth Bourgeois</span>
 
 ## <span class="c15">3.1 Database Diagram</span>
 
-<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 577.33px;">![](images/image1.png)</span>
+<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 577.33px;">![](img/sddDBArch.png)</span>
 
 * * *
 
@@ -2306,4 +2306,4 @@ Seth Bourgeois</span>
 
 ## <span class="c15">4.2 Sample Screen Image</span>
 
-<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 382.67px;">![](images/image4.png)</span>
+<span style="overflow: hidden; display: inline-block; margin: 0.00px 0.00px; border: 0.00px solid #000000; transform: rotate(0.00rad) translateZ(0px); -webkit-transform: rotate(0.00rad) translateZ(0px); width: 624.00px; height: 382.67px;">![](img/guiMockup.png)</span>
