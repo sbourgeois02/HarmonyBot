@@ -3,19 +3,24 @@
 import os
 
 import MySQLdb
+from dotenv import load_dotenv
 
-connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+#load the environment variables
+load_dotenv()
 
-cursor = connection.cursor()
-cursor.execute("select database();")
-db = cursor.fetchone()
+def main():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
 
-if db:
-    print("You're connected to database: ", db)
-else:
-    print('Not connected.')
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
 
-cursor.execute('SELECT name FROM language WHERE language_id = 1')
-results = cursor.fetchone()
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
 
-print(results)
+    cursor.execute('SELECT name FROM language WHERE language_id = 1')
+    results = cursor.fetchone()
+
+    print(results)
