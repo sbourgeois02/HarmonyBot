@@ -1,8 +1,13 @@
 #main.py
+#pip install discord
+#pip install dotenv
+
 import os
 
 import discord
 from dotenv import load_dotenv
+
+import mysqlConnect as dbConn
 
 #load the environment variables
 load_dotenv()
