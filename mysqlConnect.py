@@ -42,18 +42,29 @@ def onLoad(userList):
         print('Not connected.')
 
     cursor.execute('Select UserName, UserTag from user')
-    usersInDB = cursor.fetch()
+    usersInDB = cursor.fetchall()
+    print(usersInDB)
 
     #pseudologic
     #if user exists in database drop from userList
     #once all existing users are dropped from userList they will be added to the db
 
-    insertSQL = 'Insert into user(UserName, UserTag, RoleID, NumStrikes) values (%s, %s, %i, %i, %i);'
+    insertSQL = 'Insert into user(UserName, UserTag, UserStatusID, UserRoleID) values (%s, %s, %s, %s);'
     
     values = []
-    while userList > 0:
-        values.append(userList[0].Name, userList[0].tag, userList[0].status, userList[0].role, 0)
+    while len(userList) > 0:
+        values.append((userList[0].name, userList[0].discriminator, 0, 0))
         userList.pop(0)
 
-    cursor.executemany()
+    print(values)
+
+    cursor.executemany(insertSQL, values)
+
+    print(cursor.rowcount, "record was inserted.")
+
+    # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
         

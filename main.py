@@ -32,7 +32,8 @@ client=commands.Bot(intents=intents, command_prefix = '$')
 
 
 def init_load():
-    memberList = [None]
+    memberList = []
+    values = [()]
 
     for guild in client.guilds:
         for member in guild.members:
@@ -41,6 +42,12 @@ def init_load():
             
     print(memberList)
     dbConn.onLoad(memberList)
+
+    # while len(memberList) > 0:
+    #     values.append((memberList[0].name, memberList[0].discriminator, 0))
+    #     memberList.pop(0)
+
+    # print(values)
 
 @client.event
 async def on_ready():
