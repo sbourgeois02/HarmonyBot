@@ -43,10 +43,28 @@ def onLoad(userList):
 
     cursor.execute('Select UserName, UserTag from user')
     usersInDB = cursor.fetchall()
-    print(usersInDB)
+    #print(usersInDB)
+    # print(usersInDB[0], usersInDB[1])
+    # print(userList)
 
     #pseudologic
     #if user exists in database drop from userList
+    for currDBUser in usersInDB:
+        print("Users remaining: \n")
+        for currUser in userList:
+            print(currUser.name, currUser.discriminator)
+
+        print("\n")
+        
+        for currUser in userList:
+            print(currDBUser[0], currDBUser[1])
+            print(currUser.name, currUser.discriminator)
+            if currUser.name == currDBUser[0] and currUser.discriminator == currDBUser[1]:
+                print("\n User Dropped: ", currUser.name, currUser.discriminator, "\n")
+                userList.pop(0)
+                break;
+
+
     #once all existing users are dropped from userList they will be added to the db
 
     insertSQL = 'Insert into user(UserName, UserTag, UserStatusID, UserRoleID) values (%s, %s, %s, %s);'
@@ -56,7 +74,7 @@ def onLoad(userList):
         values.append((userList[0].name, userList[0].discriminator, 0, 0))
         userList.pop(0)
 
-    print(values)
+    # print(values)
 
     cursor.executemany(insertSQL, values)
 

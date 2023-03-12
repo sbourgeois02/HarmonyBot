@@ -38,9 +38,9 @@ def init_load():
     for guild in client.guilds:
         for member in guild.members:
             memberList.append(member)
-            print(member)
+            #print(member)
             
-    print(memberList)
+    #print(memberList)
     dbConn.onLoad(memberList)
 
     # while len(memberList) > 0:
