@@ -23,25 +23,24 @@ intents.members = True
 intents.presences = True
 client = discord.Client(intents=intents)
 
-client=commands.Bot(command_prefix = '$', intents=intents)
+client=commands.Bot(intents=intents, command_prefix = '$')
 
-
+#dbConn.onLoad()
 #connect to the database through mysqlConnect.py
 #dbConn.main()
 
 
 
 def init_load():
+    memberList = [None]
+
     for guild in client.guilds:
-        if guild.name == GUILD:
-
-          print(
-            f'{client.user} is connected to the following guild:\n'
-          f'{guild.name}\n'
-          )
-
-    members = '\n - '.join([f"{member.name} ({member.status})" for member in guild.members])
-    print(f'Guild Members:\n - {members}')
+        for member in guild.members:
+            memberList.append(member)
+            print(member)
+            
+    print(memberList)
+    dbConn.onLoad(memberList)
 
 @client.event
 async def on_ready():
