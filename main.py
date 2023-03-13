@@ -28,14 +28,24 @@ client=commands.Bot(intents=intents, command_prefix = '$')
 
 def init_load():
     memberList = []
-    values = [()]
+    values = []
 
+    #get guild members
     for guild in client.guilds:
         for member in guild.members:
             memberList.append(member)
             
-    #print(memberList)
-    dbConn.onLoad(memberList)
+    #get guild roles
+    roleList = []
+
+    
+    for role in guild.roles:
+          print((role.id, role.name))
+          roleList.append((role.id, role.name))
+
+    
+
+    dbConn.onLoad(memberList, roleList)
 
 
 

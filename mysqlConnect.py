@@ -26,7 +26,7 @@ def main():
     print(results)
 
 #onload the bot will check the database and load into it unadded things
-def onLoad(userList):
+def onLoad(userList, roleList):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),
                                  user=os.getenv('DB_USER'),
                                  passwd=os.getenv('DB_PASSWORD'),
@@ -51,7 +51,7 @@ def onLoad(userList):
         if userList[0].bot is True:
             userList.pop(0)
             continue
-        addUserList.append((userList[0].name, userList[0].discriminator, 0, userList[0].roles.id[0]))
+        addUserList.append((userList[0].name, userList[0].discriminator, 0, 0))
         userList.pop(0)
 
     print("Add User List: \n")
@@ -81,20 +81,42 @@ def onLoad(userList):
 
     print(addUserList)
 
-    #once addUserList is finalized it is added to the DB
 
-    insertSQL = 'Insert into user(UserName, UserTag, UserStatusID, UserRoleID) values (%s, %s, %s, %s);'
-    
-    values = []
-    while len(addUserList) > 0:
-        values.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], addUserList[0][3]))
-        addUserList.pop(0)
 
-    print(values)
+    #add roles
+    insertRolesSQL = 'Insert into role(RoleID, RoleName) values (%s, %s)'
 
-    cursor.executemany(insertSQL, values)
+    roleValues = []
+    print(roleList)
+    for role in roleList:
+        print(role)
+        roleValues.append((str(role[0])[0:6], role[1]))
+        roleList.pop(0)
+
+    print(roleValues)
+
+    cursor.executemany(insertRolesSQL, roleValues)
 
     print(cursor.rowcount, "record was inserted.")
+
+    #once addUserList is finalized it is added to the DB
+
+    insertUsersSQL = 'Insert into user(UserName, UserTag, UserStatusID, UserRoleID) values (%s, %s, %s, %s);'
+    
+    userValues = []
+    while len(addUserList) > 0:
+        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], str(1062091327392731247)[0:6]))
+        addUserList.pop(0)
+
+    print(userValues)
+
+    cursor.executemany(insertUsersSQL, userValues)
+
+    print(cursor.rowcount, "record was inserted.")
+
+    
+
+
 
     # Commit your changes in the database
     connection.commit()
