@@ -77,8 +77,19 @@ async def ping(ctx):
 @client.command(name="CreateCommand")
 async def CreateCommand(ctx, *args):
     print(*args)
-    splitArgs = re.split("\+\+\+", *args)
+    arguments = str(args)
+    splitArgs = re.split("\s", arguments, 2)
     print(splitArgs)
+    # splitArgs = []
+    # last = 0
+    # for i in args:
+    #       if args[i] is not "\s":
+    #             splitArgs.append(*args[last:i])
+    #             continue
+    #       else:
+    #             last = i
+    #             continue
+        
 
     newCommandName = splitArgs[0]
     newCommandPermission = splitArgs[1]
@@ -90,6 +101,18 @@ async def CreateCommand(ctx, *args):
     dbConn.storeCommands(newCommandName, newCommandPermission, newCommandScript)
 
     await ctx.channel.send("Command Created")
+
+
+
+@client.command(name="CustomCommand")
+async def CustomCommand(ctx, *args):
+    command = str(*args)
+    result = dbConn.customExecute(command)
+    print(result)
+    exec(result)
+    
+
+
 client.run(TOKEN)
 
 

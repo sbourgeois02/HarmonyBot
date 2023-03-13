@@ -76,7 +76,7 @@ def onLoad(userList, roleList):
     print(addUserList)
 
     #hardcode bug fix
-    if len(addUserList) is 1:
+    if len(addUserList) == 1:
         addUserList.pop(0)
 
     print(addUserList)
@@ -151,7 +151,7 @@ def storeCommands(name, perm, script):
 
 
     sqlInput = "Insert into commands(CommandInput, CommandAction, CommandMinRoleID) values(%s, %s, %s)"
-    commandValues = [name, script, perm]
+    commandValues = [name, script, 106209]
 
     cursor.execute(sqlInput, commandValues)
 
@@ -159,3 +159,31 @@ def storeCommands(name, perm, script):
     connection.commit()
     #close database
     connection.close()
+
+def customExecute(commandName):
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+
+    sqlInput = "select commandAction from commands where commandInput = %s"
+    commandValues = [commandName]
+    print(commandName)
+
+    cursor.execute(sqlInput, commandValues)
+    results = cursor.fetchone()
+
+    print(str(results))
+    # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return str(results)
