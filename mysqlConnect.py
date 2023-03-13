@@ -43,38 +43,54 @@ def onLoad(userList):
 
     cursor.execute('Select UserName, UserTag from user')
     usersInDB = cursor.fetchall()
-    #print(usersInDB)
-    # print(usersInDB[0], usersInDB[1])
-    # print(userList)
 
-    #pseudologic
+    addUserList =[]
+    print(userList)
+
+    while len(userList) > 0:
+        if userList[0].bot is True:
+            userList.pop(0)
+            continue
+        addUserList.append((userList[0].name, userList[0].discriminator, 0, userList[0].roles.id[0]))
+        userList.pop(0)
+
+    print("Add User List: \n")
+    print(addUserList, "\n")
+
     #if user exists in database drop from userList
     for currDBUser in usersInDB:
         print("Users remaining: \n")
-        for currUser in userList:
-            print(currUser.name, currUser.discriminator)
+        for currUser in addUserList:
+            print(currUser[0], currUser[1])
 
         print("\n")
         
-        for currUser in userList:
+        for currUser in addUserList:
             print(currDBUser[0], currDBUser[1])
-            print(currUser.name, currUser.discriminator)
-            if currUser.name == currDBUser[0] and currUser.discriminator == currDBUser[1]:
-                print("\n User Dropped: ", currUser.name, currUser.discriminator, "\n")
-                userList.pop(0)
+            print(currUser[0], currUser[1])
+            if currUser[0] == currDBUser[0] and currUser[1] == currDBUser[1]:
+                print("\n User Dropped: ", currUser[0], currUser[1], "\n")
+                addUserList.pop(0)
                 break;
 
+    print(addUserList)
 
-    #once all existing users are dropped from userList they will be added to the db
+    #hardcode bug fix
+    if len(addUserList) is 1:
+        addUserList.pop(0)
+
+    print(addUserList)
+
+    #once addUserList is finalized it is added to the DB
 
     insertSQL = 'Insert into user(UserName, UserTag, UserStatusID, UserRoleID) values (%s, %s, %s, %s);'
     
     values = []
-    while len(userList) > 0:
-        values.append((userList[0].name, userList[0].discriminator, 0, 0))
-        userList.pop(0)
+    while len(addUserList) > 0:
+        values.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], addUserList[0][3]))
+        addUserList.pop(0)
 
-    # print(values)
+    print(values)
 
     cursor.executemany(insertSQL, values)
 

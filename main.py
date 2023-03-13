@@ -25,11 +25,6 @@ client = discord.Client(intents=intents)
 
 client=commands.Bot(intents=intents, command_prefix = '$')
 
-#dbConn.onLoad()
-#connect to the database through mysqlConnect.py
-#dbConn.main()
-
-
 
 def init_load():
     memberList = []
@@ -38,16 +33,11 @@ def init_load():
     for guild in client.guilds:
         for member in guild.members:
             memberList.append(member)
-            #print(member)
             
     #print(memberList)
     dbConn.onLoad(memberList)
 
-    # while len(memberList) > 0:
-    #     values.append((memberList[0].name, memberList[0].discriminator, 0))
-    #     memberList.pop(0)
 
-    # print(values)
 
 @client.event
 async def on_ready():
