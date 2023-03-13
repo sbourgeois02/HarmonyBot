@@ -1,6 +1,7 @@
 #main.py
 #pip install discord
 #pip install dotenv
+#pip install mysqlclient
 
 import os
 
@@ -47,10 +48,11 @@ def init_load():
           print((role.id, role.name))
           roleList.append((role.id, role.name))
 
-    
+    #get profanitylist
+    profanityList = []
+          
 
     dbConn.onLoad(memberList, roleList)
-
 
 
 @client.event
@@ -59,7 +61,15 @@ async def on_ready():
     print(f'{client.user} has connected to Discord!')
     
     init_load()
-    
+
+#Chat Reader
+@client.event
+async def on_message(message):
+    message_content = message.content
+    message_author = message.author
+   # if dbConn.
+   # await message.channel.send('Mind your language, dude!')
+
 @client.command()
 async def ping(ctx):
     await ctx.channel.send("pong")
