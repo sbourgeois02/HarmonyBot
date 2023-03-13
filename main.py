@@ -67,8 +67,19 @@ async def ping(ctx):
 @client.command(name="CreateCommand")
 async def CreateCommand(ctx, *args):
     print(*args)
-    splitArgs = re.split("\+\+\+", *args)
+    arguments = str(args)
+    splitArgs = re.split("\s", arguments, 2)
     print(splitArgs)
+    # splitArgs = []
+    # last = 0
+    # for i in args:
+    #       if args[i] is not "\s":
+    #             splitArgs.append(*args[last:i])
+    #             continue
+    #       else:
+    #             last = i
+    #             continue
+        
 
     newCommandName = splitArgs[0]
     newCommandPermission = splitArgs[1]

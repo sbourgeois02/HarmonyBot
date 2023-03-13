@@ -76,7 +76,7 @@ def onLoad(userList, roleList):
     print(addUserList)
 
     #hardcode bug fix
-    if len(addUserList) is 1:
+    if len(addUserList) == 1:
         addUserList.pop(0)
 
     print(addUserList)
@@ -151,7 +151,7 @@ def storeCommands(name, perm, script):
 
 
     sqlInput = "Insert into commands(CommandInput, CommandAction, CommandMinRoleID) values(%s, %s, %s)"
-    commandValues = [name, script, perm]
+    commandValues = [name, script, 106209]
 
     cursor.execute(sqlInput, commandValues)
 
