@@ -1,25 +1,38 @@
 <?php
+    // includes variables to access the MySQL server
     include_once 'includes/dbh-inc.php';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title></title>
+    <title>HarmonyBot WebGUI</title>
 </head>
 <body>
-  
-<?php
-    $sql = "SELECT * FROM modwords;";
-    $result = mysqli_query($conn, $sql);
-    $resultCheck = mysqli_num_rows($result);
 
-    if ($resultCheck > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo $row['BadWords'] . "<br>";
-        }
-    }
-?>
+    <form method="POST">
+        <label>Select a Role: </label>
+        <select name="Role">
+            <?php
+                // fetch data from RoleName in `role` table
+                $roleName = mysqli_query($conn,"SELECT RoleName FROM role;");
+                while ($category = mysqli_fetch_assoc($roleName)):;
+            ?>
+                <option value="<?php echo $category["RoleName"];
+                // individually displays RoleName as an option within dropdown menu
+                ?>">
+                    <?php echo $category["RoleName"];
 
+                    ?>
+                </option>
+            <?php
+                // terminates the while loop
+                endwhile;
+            ?>
+        </select>
+        <br>
+        <input type="submit" value="Submit" name="submit">
+    </form>
+    <br>
 </body>
 </html>
