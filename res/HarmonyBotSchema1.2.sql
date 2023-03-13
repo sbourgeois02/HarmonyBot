@@ -20,6 +20,26 @@ CREATE SCHEMA IF NOT EXISTS `HarmonyBot` DEFAULT CHARACTER SET utf8 ;
 USE `HarmonyBot` ;
 
 -- -----------------------------------------------------
+-- Table `HarmonyBot`.`Role`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HarmonyBot`.`Role` (
+  `RoleID` INT NOT NULL,
+  `RoleName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`RoleID`),
+  UNIQUE INDEX `RoleID_UNIQUE` (`RoleID` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `HarmonyBot`.`Status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HarmonyBot`.`Status` (
+  `StatusID` INT NOT NULL,
+  `StatusName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`StatusID`),
+  UNIQUE INDEX `StatusID_UNIQUE` (`StatusID` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `HarmonyBot`.`Commands`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `HarmonyBot`.`Commands` (
@@ -38,7 +58,6 @@ CREATE TABLE IF NOT EXISTS `HarmonyBot`.`Commands` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `HarmonyBot`.`ModLog`
@@ -65,7 +84,6 @@ CREATE TABLE IF NOT EXISTS `HarmonyBot`.`ModLog` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `HarmonyBot`.`ModWords`
 -- -----------------------------------------------------
@@ -77,7 +95,6 @@ CREATE TABLE IF NOT EXISTS `HarmonyBot`.`ModWords` (
   UNIQUE INDEX `BadWords_UNIQUE` (`BadWords` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `HarmonyBot`.`Role`
 -- -----------------------------------------------------
@@ -88,7 +105,6 @@ CREATE TABLE IF NOT EXISTS `HarmonyBot`.`Role` (
   UNIQUE INDEX `RoleID_UNIQUE` (`RoleID` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `HarmonyBot`.`Status`
 -- -----------------------------------------------------
@@ -98,7 +114,6 @@ CREATE TABLE IF NOT EXISTS `HarmonyBot`.`Status` (
   PRIMARY KEY (`StatusID`),
   UNIQUE INDEX `StatusID_UNIQUE` (`StatusID` ASC) VISIBLE)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `HarmonyBot`.`User`
@@ -124,6 +139,30 @@ CREATE TABLE IF NOT EXISTS `HarmonyBot`.`User` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `HarmonyBot`.`ModLog`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `HarmonyBot`.`ModLog` (
+  `idModLog` INT NOT NULL AUTO_INCREMENT,
+  `ModdedUserName` VARCHAR(45) NOT NULL,
+  `ModdedUserTag` VARCHAR(4) NOT NULL,
+  `ModLogWordsID` INT NOT NULL,
+  `UserMessage` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`idModLog`),
+  UNIQUE INDEX `idModLog_UNIQUE` (`idModLog` ASC) VISIBLE,
+  INDEX `fk_ModLog_ModWords1_idx` (`ModLogWordsID` ASC) VISIBLE,
+  INDEX `fk_ModLog_User1_idx` (`ModdedUserName` ASC, `ModdedUserTag` ASC) VISIBLE,
+  CONSTRAINT `fk_ModLog_ModWords1`
+    FOREIGN KEY (`ModLogWordsID`)
+    REFERENCES `HarmonyBot`.`ModWords` (`ModWordsID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ModLog_User1`
+    FOREIGN KEY (`ModdedUserName` , `ModdedUserTag`)
+    REFERENCES `HarmonyBot`.`User` (`UserName` , `UserTag`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

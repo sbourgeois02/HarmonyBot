@@ -1,0 +1,1 @@
+source C:/Users/username/OneDrive/Documents/GitHub/HarmonyBot/res/HarmonyBotSchema1.2.sql
