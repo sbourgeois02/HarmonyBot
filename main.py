@@ -91,6 +91,18 @@ async def CreateCommand(ctx, *args):
     dbConn.storeCommands(newCommandName, newCommandPermission, newCommandScript)
 
     await ctx.channel.send("Command Created")
+
+
+
+@client.command(name="CustomCommand")
+async def CustomCommand(ctx, *args):
+    command = str(*args)
+    result = dbConn.customExecute(command)
+    print(result)
+    exec(result)
+    
+
+
 client.run(TOKEN)
 
 
