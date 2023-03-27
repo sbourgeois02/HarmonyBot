@@ -187,3 +187,26 @@ def customExecute(commandName):
     connection.close()
 
     return str(results)
+
+def pullProfanity():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select badwords from Modwords")
+    badWords = cursor.fetchall()
+
+    print(badWords)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return badWords

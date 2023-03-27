@@ -30,6 +30,7 @@ client = discord.Client(intents=intents)
 
 client=commands.Bot(intents=intents, command_prefix = "$")
 
+profanityList = dbConn.pullProfanity()
 
 def init_load():
     memberList = []
@@ -48,11 +49,12 @@ def init_load():
           print((role.id, role.name))
           roleList.append((role.id, role.name))
 
-    #get profanitylist
-    profanityList = []
+    #dbConn.pullProfanity(profanityList)
           
 
     dbConn.onLoad(memberList, roleList)
+
+    
 
 
 @client.event
