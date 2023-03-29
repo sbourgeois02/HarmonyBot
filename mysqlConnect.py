@@ -8,23 +8,6 @@ from dotenv import load_dotenv
 #load the environment variables
 load_dotenv()
 
-def main():
-    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
-
-    cursor = connection.cursor()
-    cursor.execute("select database();")
-    db = cursor.fetchone()
-
-    if db:
-        print("You're connected to database: ", db)
-    else:
-        print('Not connected.')
-
-    cursor.execute('SELECT name FROM language WHERE language_id = 1')
-    results = cursor.fetchone()
-
-    print(results)
-
 #onload the bot will check the database and load into it unadded things
 def onLoad(userList, roleList):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),
@@ -233,3 +216,19 @@ def pullStrikes():
     connection.close()
 
     return userStrikes
+
+def convertRoleID(ogID):
+
+    if ogID == os.getenv('ADMIN_ROLE_ID'):
+        finalID = 4
+    elif ogID == os.getenv('POWERMOD_ROLE_ID'):
+        finalID = 3
+    elif ogID == os.getenv('MOD_ROLE_ID'):
+        finalID = 2
+    elif ogID == os.getenv('SUPERUSER_ROLE_ID'):
+        finalID = 1
+    elif ogID == os.getenv('USER_ROLE_ID'):
+        finalID = 0
+
+
+    return finalID
