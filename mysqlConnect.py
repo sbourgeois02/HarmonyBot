@@ -217,18 +217,39 @@ def pullStrikes():
 
     return userStrikes
 
+def updateStrikes():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select UserName, UserTag, UserNumStrikes from user")
+    userStrikes = cursor.fetchall()
+
+    print(userStrikes)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
 def convertRoleID(ogID):
 
     if ogID == os.getenv('ADMIN_ROLE_ID'):
-        finalID = 4
+        dbID = 4
     elif ogID == os.getenv('POWERMOD_ROLE_ID'):
-        finalID = 3
+        dbID = 3
     elif ogID == os.getenv('MOD_ROLE_ID'):
-        finalID = 2
+        dbID = 2
     elif ogID == os.getenv('SUPERUSER_ROLE_ID'):
-        finalID = 1
+        dbID = 1
     elif ogID == os.getenv('USER_ROLE_ID'):
-        finalID = 0
+        dbID = 0
 
 
-    return finalID
+    return dbID
