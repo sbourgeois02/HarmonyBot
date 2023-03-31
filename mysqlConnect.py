@@ -217,7 +217,7 @@ def pullStrikes():
 
     return userStrikes
 
-def updateStrikes():
+def updateStrikes(name, tag, numStrikes):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
     cursor = connection.cursor()
     cursor.execute("select database();")
@@ -228,15 +228,15 @@ def updateStrikes():
     else:
         print('Not connected.')
 
-    cursor.execute("select UserName, UserTag, UserNumStrikes from user")
-    userStrikes = cursor.fetchall()
-
-    print(userStrikes)
+    sqlInput = "update user set UserNumStrikes = %s where UserName = %s amd UserTag = %s"
+    commandValues = [numStrikes, name, tag]
+    cursor.execute(sqlInput, commandValues)
 
      # Commit your changes in the database
     connection.commit()
     #close database
     connection.close()
+
 
 def convertRoleID(ogID):
 
