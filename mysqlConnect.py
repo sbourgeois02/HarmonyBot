@@ -8,23 +8,6 @@ from dotenv import load_dotenv
 #load the environment variables
 load_dotenv()
 
-def main():
-    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
-
-    cursor = connection.cursor()
-    cursor.execute("select database();")
-    db = cursor.fetchone()
-
-    if db:
-        print("You're connected to database: ", db)
-    else:
-        print('Not connected.')
-
-    cursor.execute('SELECT name FROM language WHERE language_id = 1')
-    results = cursor.fetchone()
-
-    print(results)
-
 #onload the bot will check the database and load into it unadded things
 def onLoad(userList, roleList):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),
@@ -119,7 +102,7 @@ def onLoad(userList, roleList):
     
     userValues = []
     while len(addUserList) > 0:
-        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], str(1062091327392731247)[0:6]))
+        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], 0))
         addUserList.pop(0)
 
     #print(userValues)
@@ -187,3 +170,86 @@ def customExecute(commandName):
     connection.close()
 
     return str(results)
+
+def pullProfanity():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select badwords from Modwords")
+    badWords = cursor.fetchall()
+
+    print(badWords)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return badWords
+
+def pullStrikes():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select UserName, UserTag, UserNumStrikes from user")
+    userStrikes = cursor.fetchall()
+
+    print(userStrikes)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return userStrikes
+
+def updateStrikes(name, tag, numStrikes):
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    sqlInput = "update user set UserNumStrikes = %s where UserName = %s amd UserTag = %s"
+    commandValues = [numStrikes, name, tag]
+    cursor.execute(sqlInput, commandValues)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+
+def convertRoleID(ogID):
+
+    if ogID == os.getenv('ADMIN_ROLE_ID'):
+        dbID = 4
+    elif ogID == os.getenv('POWERMOD_ROLE_ID'):
+        dbID = 3
+    elif ogID == os.getenv('MOD_ROLE_ID'):
+        dbID = 2
+    elif ogID == os.getenv('SUPERUSER_ROLE_ID'):
+        dbID = 1
+    elif ogID == os.getenv('USER_ROLE_ID'):
+        dbID = 0
+
+
+    return dbID
