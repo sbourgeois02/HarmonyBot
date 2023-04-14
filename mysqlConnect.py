@@ -120,7 +120,7 @@ def onLoad(userList, roleList):
     #close database
     connection.close()
 
-def storeCommands(name, perm, script):
+def storeCommands(name, output):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
 
     cursor = connection.cursor()
@@ -133,8 +133,8 @@ def storeCommands(name, perm, script):
         print('Not connected.')
 
 
-    sqlInput = "Insert into commands(CommandInput, CommandAction, CommandMinRoleID) values(%s, %s, %s)"
-    commandValues = [name, script, 106209]
+    sqlInput = "Insert into commands(CommandInput, CommandAction) values(%s, %s)"
+    commandValues = [name, output]
 
     cursor.execute(sqlInput, commandValues)
 

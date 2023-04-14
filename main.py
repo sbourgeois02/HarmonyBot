@@ -95,13 +95,13 @@ async def CreateCommand(ctx, *args):
         
 
     newCommandName = splitArgs[0]
-    newCommandPermission = splitArgs[1]
-    newCommandScript = splitArgs[2]
+    
+    newCommandScript = splitArgs[1]
 
-    print("New Command\nName: ", newCommandName, "\nPermission Level: ", newCommandPermission,
+    print("New Command\nName: ", newCommandName,
            "\nScript: ", newCommandScript)
     
-    dbConn.storeCommands(newCommandName, newCommandPermission, newCommandScript)
+    dbConn.storeCommands(newCommandName, newCommandScript)
 
     await ctx.channel.send("Command Created")
 
@@ -112,8 +112,26 @@ async def CustomCommand(ctx, *args):
     command = str(*args)
     result = dbConn.customExecute(command)
     print(result)
-    exec(result)
+
+    object_of_action = ctx.author.mention
+
+    if len(args) > 1:
+        object_of_action = args[2]
+
     
+
+    result.replace('%1', object_of_action)
+    
+    # for character in result:
+    #     if character == '%' and character+1 == '1':
+    #         if len(args) > 1:
+    #             result.insert(character, args[2])
+    #         if len(args) == 1:
+    #              result.insert(character, ctx.message.author)
+    #         result.
+
+
+    await ctx.channel.send(result)
 
 
 client.run(TOKEN)
