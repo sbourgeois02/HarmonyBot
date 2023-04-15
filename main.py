@@ -63,10 +63,10 @@ async def on_ready():
     init_load()
 
 #Chat Reader
-@client.event
-async def on_message(message):
-    message_content = message.content
-    message_author = message.author
+# @client.event
+# async def on_message(message):
+#     message_content = message.content
+#     message_author = message.author
    # if dbConn.
    # await message.channel.send('Mind your language, dude!')
 
