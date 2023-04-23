@@ -53,9 +53,11 @@
                             // display the plus and minus buttons
                             $displayMinus = "<form action='removeStrikeProcess.php' method='post'>
                                                 <button type='submit' class='symbols'>&minus;</button>
+                                                <input type='hidden' name='user' value='" . $row["UserName"] . "'>
                                             </form>";
                             $displayPlus = "<form action='addStrikeProcess.php' method='post'>
                                                 <button type='submit' class='symbols'>&plus;</button>
+                                                <input type='hidden' name='user' value='" . $row["UserName"] . "'>
                                             </form>";
                             // display the user table
                             echo "<tr><td>" . $row["UserName"] . "</td><td>#" . $row["UserTag"] . "</td><td>" . $status . "</td><td>" . $rName . "</td><td>" . $row["UserNumStrikes"] . $displayMinus . $displayPlus;
