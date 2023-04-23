@@ -15,8 +15,9 @@
         <h2>User Data Table</h2>
         <table>
             <tr>
-                <th>UserTag</th>
                 <th>UserName</th>
+                <th>UserTag</th>
+                <th>Status</th>
                 <th>Role</th>
             </tr>
             <?php
@@ -33,8 +34,16 @@
                         $roleName = mysqli_fetch_assoc($roleResult);
                         $name = $roleName["RoleName"];
                         mysqli_free_result($roleResult);
+                        // get the Status Name from the Status ID
+                        // insert into variable $status
+                        $statusID = $row["UserStatusID"];
+                        $statusSQL = "SELECT StatusName FROM status WHERE StatusID = $statusID;";
+                        $statusResult = mysqli_query($conn, $statusSQL);
+                        $statusName = mysqli_fetch_assoc($statusResult);
+                        $status = $statusName["StatusName"];
+                        mysqli_free_result($statusResult);
                         // display the user table
-                        echo "<tr><td>#" . $row["UserTag"] . "</td><td>" . $row["UserName"] . "</td><td>" . $name . "</td></tr>";
+                        echo "<tr><td>" . $row["UserName"] . "</td><td>#" . $row["UserTag"] . "</td><td>" . $status . "</td><td>" . $name . "</td></tr>";
                     }
                 }
             ?>
