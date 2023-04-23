@@ -8,6 +8,9 @@ th, td {
 th {
     text-align: left;
 }
+form {
+  display: inline-block;
+}
 .main {
   display: flex;
   flex-direction: column;

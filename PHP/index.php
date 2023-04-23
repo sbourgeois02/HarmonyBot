@@ -50,8 +50,15 @@
                             $statusName = mysqli_fetch_assoc($statusResult);
                             $status = $statusName["StatusName"];
                             mysqli_free_result($statusResult);
+                            // display the plus and minus buttons
+                            $displayMinus = "<form action='removeStrikeProcess.php' method='post'>
+                                                <button type='submit' class='symbols'>&minus;</button>
+                                            </form>";
+                            $displayPlus = "<form action='addStrikeProcess.php' method='post'>
+                                                <button type='submit' class='symbols'>&plus;</button>
+                                            </form>";
                             // display the user table
-                            echo "<tr><td>" . $row["UserName"] . "</td><td>#" . $row["UserTag"] . "</td><td>" . $status . "</td><td>" . $rName . "</td><td>" . $row["UserNumStrikes"] . "<button class='symbols'>&minus;</button>" . "<button class='symbols'>&plus;</button>";
+                            echo "<tr><td>" . $row["UserName"] . "</td><td>#" . $row["UserTag"] . "</td><td>" . $status . "</td><td>" . $rName . "</td><td>" . $row["UserNumStrikes"] . $displayMinus . $displayPlus;
                         }
                     }
                 ?>
