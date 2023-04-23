@@ -26,6 +26,7 @@
                     <th>UserTag</th>
                     <th>Status</th>
                     <th>Role</th>
+                    <th>Strikes</th>
                 </tr>
                 <?php
                     $sql = "SELECT * FROM user;";
@@ -39,7 +40,7 @@
                             $roleSQL = "SELECT RoleName FROM role WHERE RoleID = $roleID;";
                             $roleResult = mysqli_query($conn, $roleSQL);
                             $roleName = mysqli_fetch_assoc($roleResult);
-                            $name = $roleName["RoleName"];
+                            $rName = $roleName["RoleName"];
                             mysqli_free_result($roleResult);
                             // get the Status Name from the Status ID
                             // insert into variable $status
@@ -50,7 +51,7 @@
                             $status = $statusName["StatusName"];
                             mysqli_free_result($statusResult);
                             // display the user table
-                            echo "<tr><td>" . $row["UserName"] . "</td><td>#" . $row["UserTag"] . "</td><td>" . $status . "</td><td>" . $name . "</td></tr>";
+                            echo "<tr><td>" . $row["UserName"] . "</td><td>#" . $row["UserTag"] . "</td><td>" . $status . "</td><td>" . $rName . "</td><td>" . $row["UserNumStrikes"] . "<button class='symbols'>&minus;</button>" . "<button class='symbols'>&plus;</button>";
                         }
                     }
                 ?>
