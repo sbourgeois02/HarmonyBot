@@ -19,5 +19,5 @@ if ($result) {
 }
 
 mysqli_close($conn);
-
+header("Location: index.php?update=success");
 ?>
