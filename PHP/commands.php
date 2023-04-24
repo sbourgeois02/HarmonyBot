@@ -53,6 +53,26 @@
                 ?>
             </table>
         </div>
+        <div class="content">
+            <h1>Add Command</h1>
+            <form action="../PHP/process/addCommand.php" method="post">
+                <input type="text" name="input" placeholder="Command Input">
+                <input type="text" name="action" placeholder="Command Action">
+                <input type="text" name="output" placeholder="Command Output">
+                <select name="role">
+                    <?php
+                        $sql = "SELECT * FROM role;";
+                        $result = mysqli_query($conn, $sql);
+                        $resultCheck = mysqli_num_rows($result);
+                        if ($resultCheck > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value='" . $row['RoleID'] . "'>" . $row['RoleName'] . "</option>";
+                            }
+                        }
+                    ?>
+                </select>
+                <button type="submit" name="submit">Add Command</button>
+        </div>
     </div>
 </body>
 </html>
