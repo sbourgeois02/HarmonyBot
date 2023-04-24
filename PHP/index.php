@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>HarmonyBot WebGUI</title>
+    <title>Users</title>
     <link rel="stylesheet" href="includes/styles.css">
 </head>
 
@@ -55,11 +55,11 @@
                             $status = $statusName["StatusName"];
                             mysqli_free_result($statusResult);
                             // display the plus and minus buttons
-                            $displayMinus = "<form action='removeStrikeProcess.php' method='post'>
+                            $displayMinus = "<form action='../PHP/process/removeStrike.php' method='post'>
                                                 <button type='submit' class='symbols'>&minus;</button>
                                                 <input type='hidden' name='user' value='" . $row["UserName"] . "'>
                                             </form>";
-                            $displayPlus = "<form action='addStrikeProcess.php' method='post'>
+                            $displayPlus = "<form action='../PHP/process/addStrike.php' method='post'>
                                                 <button type='submit' class='symbols'>&plus;</button>
                                                 <input type='hidden' name='user' value='" . $row["UserName"] . "'>
                                             </form>";
@@ -73,7 +73,7 @@
         <p></p>
         <div class="content">
             <h2 style="text-align:center;">Update User Role</h2>
-            <form method="post" action="process.php">
+            <form method="post" action='..\PHP\process\roleUpdate.php'>
                 <label for="user">Select a User: </label>
                 <select name="user" id="user">
                     <?php
