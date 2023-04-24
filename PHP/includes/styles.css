@@ -16,13 +16,14 @@ form {
   display: flex;
   margin-top: 20px;
   flex-direction: row;
+}
+.content {
+  margin-left: 20px;
+  padding: 20px;
   border: #000;
   border-style: solid;
   border-width: 4px;
   border-radius: 10px;
-}
-.content {
-  margin-left: 20px;
 }
 .symbols {
   position: relative;
