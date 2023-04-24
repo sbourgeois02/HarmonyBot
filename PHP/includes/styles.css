@@ -38,8 +38,9 @@ form {
   margin: 0 4px;
 }
 .banner {
-  width: 97.5%;
+  width: calc(100% - 50px);
   height: 45px;
+  margin-right: 100px;
   background-image: linear-gradient(to right, #ccc, rgb(46, 46, 46));
   border: #000;
   border-style: solid;
