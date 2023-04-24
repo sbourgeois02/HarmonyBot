@@ -1,5 +1,5 @@
 table, th, td {
-    border: 1px solid rgb(0, 0, 0);
+    border: 1px solid #000;
     border-collapse: collapse;
 }
 th, td {
@@ -30,29 +30,104 @@ form {
   font: bold 20px Arial, sans-serif;
   margin: 0 4px;
 }
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100px;
-  height: 100%;
-  overflow: auto;
-  background-color: #f1f1f1;
-  z-index: 99;
+.banner {
+  width: 98%;
+  height: 45px;
+  background-image: linear-gradient(to right, yellow, red);
+  border-radius: 5px;
+  padding: 20px;
 }
-.sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
+.banner .title {
+  text-align: center;
+  margin-top: -3px;
+  float: right;
+}
+.banner .buttons {
+  float: left;
+}
+.banner .buttons button {
+  --border: 4px;    /* the border width */
+  --slant: 0.7em;   /* control the slanted corners */
+  --color: #000; /* the color */
+  
+  margin-left: 10px;
+  font-size: 25px;
+  padding: 0.3em 1.2em;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--color);
+  background: 
+     linear-gradient(to bottom left,var(--color)  50%,#0000 50.1%) top right,
+     linear-gradient(to top   right,var(--color)  50%,#0000 50.1%) bottom left;
+  background-size: calc(var(--slant) + 1.3*var(--border)) calc(var(--slant) + 1.3*var(--border));
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 200px inset var(--s,#0000),
+    0 0 0 var(--border) inset var(--color);
+  clip-path: 
+      polygon(0 0, calc(100% - var(--slant)) 0, 100% var(--slant),
+              100% 100%, var(--slant) 100%,0 calc(100% - var(--slant))
+             );
+  transition: color var(--t,0.3s), background-size 0.3s;
+}
+.banner .buttons button:focus-visible {
+  outline-offset: calc(-1*var(--border));
+  outline: var(--border) solid #000c;
+  clip-path: none;
+  background-size: 0 0;
+}
+.banner .buttons button:hover,
+.banner .buttons button:active{
+  background-size: 100% 100%;
+  color: #fff;
+  --t: 0.2s 0.1s;
+}
+.banner .buttons button:active {
+  --s: #0005;
+  transition: none;
 }
 
-.sidebar a.active {
-  background-color: #04AA6D;
-  color: white;
-}
 
-.sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white;
+/* WEBSITE TITLE HOVER EFFECT */
+.banner .title button {
+  --border: 4px;    /* the border width */
+  --slant: 0.7em;   /* control the slanted corners */
+  --color: #fff; /* the color */
+  
+  margin-left: 10px;
+  font-size: 30px;
+  padding: 0.3em 1.2em;
+  border: none;
+  font-weight: bold;
+  color: var(--color);
+  background: 
+     linear-gradient(to bottom left,var(--color)  50%,#0000 50.1%) top right,
+     linear-gradient(to top    right,var(--color)  50%,#0000 50.1%) bottom left;
+  background-size: calc(var(--slant) + 1.3*var(--border)) calc(var(--slant) + 1.3*var(--border));
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 200px inset var(--s,#0000),
+    0 0 0 var(--border) inset var(--color);
+  clip-path: 
+      polygon(0 0, calc(100% - var(--slant)) 0, 100% var(--slant),
+              100% 100%, var(--slant) 100%,0 calc(100% - var(--slant))
+             );
+  transition: color var(--t,0.3s), background-size 0.3s;
+}
+.banner .title button:focus-visible {
+  outline-offset: calc(-1*var(--border));
+  outline: var(--border) solid #000c;
+  clip-path: none;
+  background-size: 0 0;
+}
+.banner .title button:hover,
+.banner .title button:active{
+  background-size: 100% 100%;
+  color: #000;
+  --t: 0.2s 0.1s;
+}
+.banner .title button:active {
+  --s: #0005;
+  transition: none;
 }

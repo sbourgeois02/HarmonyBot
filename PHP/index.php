@@ -10,13 +10,18 @@
 </head>
 
 <body>
-    <div class="main">
-        <div class="sidebar">
-            <a href="index.php">Home</a>
-            <a href="user.php">User</a>
-            <a href="role.php">Role</a>
-            <a href="status.php">Status</a>
+    <div class="banner">
+        <div class="title">
+            <button>HarmonyBot WebGUI</button>
         </div>
+        <div class="buttons">
+            <button>Users</button>
+            <button>Commands</button>
+            <button>Roles</button>
+            <button>Modwords</button>
+        </div>
+    </div>
+    <div class="main">
         <div class="content">
             <h1>HarmonyBot WebGUI</h1>
             <h2>User Data Table</h2>
@@ -68,6 +73,7 @@
         </div>
         <p></p>
         <div class="content">
+            <h2>Update User Role:</h2>
             <form method="post" action="process.php">
                 <label for="user">Select a User: </label>
                 <select name="user" id="user">
@@ -103,7 +109,7 @@
                     ?>
                 </select>
                 <br>
-                <button type="submit">Submit</button>
+                <button type="submit">Submit Changes</button>
             <br>
         </div>
     </div>
