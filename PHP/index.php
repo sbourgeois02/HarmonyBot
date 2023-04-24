@@ -12,7 +12,7 @@
 <body>
     <div class="banner">
         <div class="title">
-            <button>HarmonyBot WebGUI</button>
+            <button onclick="window.open('https://github.com/sbourgeois02/HarmonyBot','_blank')">HarmonyBot WebGUI</button>
         </div>
         <div class="buttons">
             <button onclick="window.location.href='index.php'">Users</button>
@@ -72,7 +72,7 @@
         </div>
         <p></p>
         <div class="content">
-            <h1>Update User Role:</h1>
+            <h2 style="text-align:center;">Update User Role</h2>
             <form method="post" action="process.php">
                 <label for="user">Select a User: </label>
                 <select name="user" id="user">
@@ -89,7 +89,7 @@
                             endwhile;
                         ?>
                 </select>
-                <br>
+                <p></p>
                 <label for="role">Select a Role: </label>
                 <select name="role" id="role">
                     <?php
@@ -107,8 +107,8 @@
                         endwhile;
                     ?>
                 </select>
-                <br>
-                <button type="submit">Submit Changes</button>
+                <p></p>
+                <button type="submit" style="float:right;">Submit Changes</button>
             <br>
         </div>
     </div>
