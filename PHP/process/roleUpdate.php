@@ -1,5 +1,5 @@
 <?php
-include_once 'includes/dbh-inc.php';
+include_once '../../PHP/includes/dbh-inc.php';
 $user = $_POST['user'];
 $roleString = $_POST['role'];
 
@@ -19,5 +19,5 @@ if ($result) {
 }
 
 mysqli_close($conn);
-
+header("Location: ../index.php?update=success");
 ?>
