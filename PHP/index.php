@@ -15,16 +15,15 @@
             <button>HarmonyBot WebGUI</button>
         </div>
         <div class="buttons">
-            <button>Users</button>
-            <button>Commands</button>
-            <button>Roles</button>
-            <button>Modwords</button>
+            <button onclick="window.location.href='index.php'">Users</button>
+            <button onclick="window.location.href='commands.php'">Commands</button>
+            <button onclick="window.location.href='roles.php'">Roles</button>
+            <button onclick="window.location.href='modwords.php'">Modwords</button>
         </div>
     </div>
     <div class="main">
         <div class="content">
-            <h1>HarmonyBot WebGUI</h1>
-            <h2>User Data Table</h2>
+            <h1>User Data Table</h1>
             <table>
                 <tr>
                     <th>UserName</th>
@@ -73,7 +72,7 @@
         </div>
         <p></p>
         <div class="content">
-            <h2>Update User Role:</h2>
+            <h1>Update User Role:</h1>
             <form method="post" action="process.php">
                 <label for="user">Select a User: </label>
                 <select name="user" id="user">
