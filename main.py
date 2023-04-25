@@ -8,9 +8,12 @@ import os
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
+from discord.ext import tasks
 from dotenv import load_dotenv
 
 import re
+
+import sched, time
 
 import mysqlConnect as dbConn
 
@@ -54,9 +57,14 @@ def init_load():
           
 
     dbConn.onLoad(memberList)
+    update_db.start()
 
     
-
+@tasks.loop(minutes=2)
+async def update_db():
+    print("updating...")
+    channel = client.get_channel(1084683040518840350)
+    await channel.send("updating database")
 
 @client.event
 async def on_ready():
@@ -132,6 +140,8 @@ async def CustomCommand(ctx, *args):
 
 
     await ctx.channel.send(result)
+
+
 
 
 client.run(TOKEN)
