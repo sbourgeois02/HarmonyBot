@@ -53,7 +53,7 @@ def init_load():
     #dbConn.pullProfanity(profanityList)
           
 
-    dbConn.onLoad(memberList, roleList)
+    dbConn.onLoad(memberList)
 
     
 

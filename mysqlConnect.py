@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 #onload the bot will check the database and load into it unadded things
-def onLoad(userList, roleList):
+def onLoad(userList):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),
                                  user=os.getenv('DB_USER'),
                                  passwd=os.getenv('DB_PASSWORD'),
@@ -34,7 +34,12 @@ def onLoad(userList, roleList):
         if userList[0].bot is True:
             userList.pop(0)
             continue
-        addUserList.append((userList[0].name, userList[0].discriminator, 0, 0))
+        if len(userList[0].roles) > 1:
+            roleID = convertRoleID(userList[0].roles[1])
+            print(roleID)
+            addUserList.append((userList[0].name, userList[0].discriminator, 0, roleID))
+        else:
+            addUserList.append((userList[0].name, userList[0].discriminator, 0, 0))
         userList.pop(0)
 
     print("Add User List: \n")
@@ -64,37 +69,8 @@ def onLoad(userList, roleList):
 
     print(addUserList)
 
-    # #check if roles are in database
-    # cursor.execute('Select RoleID from role')
-    # rolesInDB = cursor.fetchall()
 
-    # print("Stored Roles: ", rolesInDB)
-    # print(rolesInDB[0][0:1])
-    # for role in roleList:
-    #     print(str(role[0])[0:6])
-
-    # for role in roleList:
-    #     for currDBRole in rolesInDB:
-    #         if str(role[0])[0:6] is currDBRole[1:7]:
-    #             roleList.pop(0)
-
-    # print(roleList)
-
-    #add roles
-    insertRolesSQL = 'Insert into role(RoleID, RoleName) values (%s, %s)'
-
-    roleValues = []
-    #print(roleList)
-    for role in roleList:
-        #print(role)
-        roleValues.append((str(role[0])[0:6], role[1]))
-        roleList.pop(0)
-
-    #print(roleValues)
-
-    cursor.executemany(insertRolesSQL, roleValues)
-
-    print(cursor.rowcount, "record was inserted.")
+    
 
     #once addUserList is finalized it is added to the DB
 
@@ -102,7 +78,7 @@ def onLoad(userList, roleList):
     
     userValues = []
     while len(addUserList) > 0:
-        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], 0))
+        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], addUserList[0][3]))
         addUserList.pop(0)
 
     #print(userValues)
@@ -238,18 +214,22 @@ def updateStrikes(name, tag, numStrikes):
     connection.close()
 
 
-def convertRoleID(ogID):
+def convertRoleID(roles):
 
-    if ogID == os.getenv('ADMIN_ROLE_ID'):
+    print(roles.id)
+    
+    dbID = 0
+    
+    if roles.id == "Administrator":
         dbID = 4
-    elif ogID == os.getenv('POWERMOD_ROLE_ID'):
+    elif roles.id == "Power Moderator":
         dbID = 3
-    elif ogID == os.getenv('MOD_ROLE_ID'):
+    elif roles.name == "Moderator": # == os.getenv('MOD_ROLE_ID'):
         dbID = 2
-    elif ogID == os.getenv('SUPERUSER_ROLE_ID'):
+    elif roles.id == "SuperUser":
         dbID = 1
-    elif ogID == os.getenv('USER_ROLE_ID'):
-        dbID = 0
+    
 
+    print(dbID)
 
     return dbID
