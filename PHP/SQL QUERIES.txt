@@ -1,0 +1,23 @@
+INSERT INTO user (UserName, UserTag, UserStatusID, UserRoleID, UserNumStrikes)
+VALUES ('SuperWeasel01', '0001', 0, 0, 0),
+       ('PowerMan02', '0002', 0, 0, 0),
+       ('SwaggerWagon03', '0003', 0, 0, 0),
+       ('FramingGallop04', '0004', 0, 0, 0),
+       ('ProngedCheese05', '0005', 0, 0, 0),
+       ('FragileNets06', '0006', 0, 0, 0),
+       ('WealthyCow07', '0007', 0, 0, 0),
+       ('MarmaladeDuke08', '0008', 0, 0, 0);
+
+INSERT INTO `status`(`StatusID`, `StatusName`) 
+VALUES (0,'Online'), (1,'Idle'), (2,'Do Not Disturb'), (3,'Invisible');
+
+INSERT INTO `role` (`RoleID`, `RoleName`)
+VALUES (0,`USER`), (1,`SUPERUSER`), (2,`MOD`), (3,`POWERMOD`), (4,`ADMIN`);
+
+INSERT INTO `commands`(`CommandID`, `CommandInput`, `CommandAction`, `CommandOutput`, `CommandMinRoleID`)
+VALUES ('0','string','addStrike','bool','2'),
+       ('1','string','removeStrike','bool','2'),
+       ('2','string','banUser','bool','3'),
+       ('3','string','muteUser','bool','2'),
+       ('4','string','deleteChat','bool','1'),
+       ('5','string','reportUser','bool','1');
