@@ -66,6 +66,6 @@
                             endwhile;
                         ?>
                 </select>
-            <button type="submit" name="submit">Remove Role</button>
+            <button onclick="return confirm('Are you sure you want to remove this role permanently?');" type="submit" name="submit">Remove Role</button>
         </div>
 </body>

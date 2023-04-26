@@ -70,7 +70,7 @@
                         <?php endwhile;?>
                 </select>
                 <p></p>
-                <button type="submit" name="submit">Remove Command</button>
+                <button onclick="return confirm('Are you sure you want to remove this command permanently?');" type="submit" name="submit">Remove Command</button>
                 <p></p>
             </form>
         </div>

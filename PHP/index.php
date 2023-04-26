@@ -108,7 +108,7 @@
                     ?>
                 </select>
                 <p></p>
-                <button type="submit" style="float:right;">Submit Changes</button>
+                <button onclick="return confirm('Are you sure you want to update the role of this User?');" type="submit" style="float:right;">Submit Changes</button>
             <br>
         </div>
     </div>
