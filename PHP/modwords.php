@@ -30,4 +30,19 @@
             ?>
             <p></p>
         </div>
+        <div class="content">
+            <h1>Add Bad Word</h1>
+            <form action="process/addModword.php" method="POST">
+                <input type="text" name="modword" placeholder="Modword">
+                <button type="submit" name="submit">Add Modword</button>
+            </form>
+        </div>
+        <div class="content">
+            <h1>Remove Bad Word</h1>
+            <form action="process/removeModword.php" method="POST">
+                <input type="text" name="modword" placeholder="Modword">
+                <button type="submit" name="submit">Remove Modword</button>
+            </form>
+        </div>
+    </div>
 </body>
