@@ -49,10 +49,28 @@
                 <input type="text" name="input" placeholder="User Input">
                 <p></p>
                 <div class="script">
-                    <input style="text-align: top" type="text" size="50" height="100px" name="action" placeholder="Command Script">
+                    <input type="text" size="50" height="100px" name="action" placeholder="Command Script">
                 </div>
                 <p></p>
                 <button type="submit" name="submit">Add Command</button>
+                <p></p>
+            </form>
+        </div>
+        <div class="content">
+            <h1>Remove Command</h1>
+            <form action="../PHP/process/removeCommand.php" method="post">
+                <select name="remove">
+                        <?php
+                            $input = mysqli_query($conn, "SELECT CommandInput FROM commands;");
+                            while ($inputs = mysqli_fetch_assoc($input)):;
+                        ?>
+                        <option value="<?php echo $inputs["CommandInput"];?>">
+                            <?php echo $inputs["CommandInput"];?>
+                        </option>
+                        <?php endwhile;?>
+                </select>
+                <p></p>
+                <button type="submit" name="submit">Remove Command</button>
                 <p></p>
             </form>
         </div>
