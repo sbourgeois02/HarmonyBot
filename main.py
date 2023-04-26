@@ -117,18 +117,22 @@ async def CreateCommand(ctx, *args):
 
 @client.command(name="CustomCommand")
 async def CustomCommand(ctx, *args):
-    command = str(*args)
+    print(*args)
+    command = str(args[0])
+    print(command)
     result = dbConn.customExecute(command)
     print(result)
 
     object_of_action = ctx.author.mention
 
     if len(args) > 1:
-        object_of_action = args[2]
+        object_of_action = str(args[1])
+        print(object_of_action)
+        
+
+    result = result.replace("%1", object_of_action)
 
     
-
-    result.replace('%1', object_of_action)
     
     # for character in result:
     #     if character == '%' and character+1 == '1':
