@@ -1,4 +1,5 @@
 <?php
+    // includes variables to access the MySQL server
     include_once 'includes/dbh-inc.php';
 ?>
 
@@ -8,7 +9,6 @@
     <title>Users</title>
     <link rel="stylesheet" href="includes/styles.css">
 </head>
-
 <body>
     <div class="banner">
         <div class="title">

@@ -8,25 +8,8 @@ from dotenv import load_dotenv
 #load the environment variables
 load_dotenv()
 
-def main():
-    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
-
-    cursor = connection.cursor()
-    cursor.execute("select database();")
-    db = cursor.fetchone()
-
-    if db:
-        print("You're connected to database: ", db)
-    else:
-        print('Not connected.')
-
-    cursor.execute('SELECT name FROM language WHERE language_id = 1')
-    results = cursor.fetchone()
-
-    print(results)
-
 #onload the bot will check the database and load into it unadded things
-def onLoad(userList, roleList):
+def onLoad(userList):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),
                                  user=os.getenv('DB_USER'),
                                  passwd=os.getenv('DB_PASSWORD'),
@@ -51,7 +34,12 @@ def onLoad(userList, roleList):
         if userList[0].bot is True:
             userList.pop(0)
             continue
-        addUserList.append((userList[0].name, userList[0].discriminator, 0, 0))
+        if len(userList[0].roles) > 1:
+            roleID = convertRoleID(userList[0].roles[1])
+            print(roleID)
+            addUserList.append((userList[0].name, userList[0].discriminator, 0, roleID))
+        else:
+            addUserList.append((userList[0].name, userList[0].discriminator, 0, 0))
         userList.pop(0)
 
     print("Add User List: \n")
@@ -81,37 +69,8 @@ def onLoad(userList, roleList):
 
     print(addUserList)
 
-    # #check if roles are in database
-    # cursor.execute('Select RoleID from role')
-    # rolesInDB = cursor.fetchall()
 
-    # print("Stored Roles: ", rolesInDB)
-    # print(rolesInDB[0][0:1])
-    # for role in roleList:
-    #     print(str(role[0])[0:6])
-
-    # for role in roleList:
-    #     for currDBRole in rolesInDB:
-    #         if str(role[0])[0:6] is currDBRole[1:7]:
-    #             roleList.pop(0)
-
-    # print(roleList)
-
-    #add roles
-    insertRolesSQL = 'Insert into role(RoleID, RoleName) values (%s, %s)'
-
-    roleValues = []
-    #print(roleList)
-    for role in roleList:
-        #print(role)
-        roleValues.append((str(role[0])[0:6], role[1]))
-        roleList.pop(0)
-
-    #print(roleValues)
-
-    cursor.executemany(insertRolesSQL, roleValues)
-
-    print(cursor.rowcount, "record was inserted.")
+    
 
     #once addUserList is finalized it is added to the DB
 
@@ -119,7 +78,7 @@ def onLoad(userList, roleList):
     
     userValues = []
     while len(addUserList) > 0:
-        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], str(1062091327392731247)[0:6]))
+        userValues.append((addUserList[0][0], addUserList[0][1], addUserList[0][2], addUserList[0][3]))
         addUserList.pop(0)
 
     #print(userValues)
@@ -137,7 +96,7 @@ def onLoad(userList, roleList):
     #close database
     connection.close()
 
-def storeCommands(name, perm, script):
+def storeCommands(name, output):
     connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
 
     cursor = connection.cursor()
@@ -150,8 +109,8 @@ def storeCommands(name, perm, script):
         print('Not connected.')
 
 
-    sqlInput = "Insert into commands(CommandInput, CommandAction, CommandMinRoleID) values(%s, %s, %s)"
-    commandValues = [name, script, 106209]
+    sqlInput = "Insert into commands(CommandInput, CommandAction) values(%s, %s)"
+    commandValues = [name, output]
 
     cursor.execute(sqlInput, commandValues)
 
@@ -186,4 +145,97 @@ def customExecute(commandName):
     #close database
     connection.close()
 
+    results = str(results)
+
+    results = results[2:len(results)-3]
+
+    print(results)
+
     return str(results)
+
+def pullProfanity():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select badwords from Modwords")
+    badWords = cursor.fetchall()
+
+    print(badWords)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return badWords
+
+def pullStrikes():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select UserName, UserTag, UserNumStrikes from user")
+    userStrikes = cursor.fetchall()
+
+    print(userStrikes)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return userStrikes
+
+def updateStrikes(name, tag, numStrikes):
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    sqlInput = "update user set UserNumStrikes = %s where UserName = %s amd UserTag = %s"
+    commandValues = [numStrikes, name, tag]
+    cursor.execute(sqlInput, commandValues)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+
+def convertRoleID(roles):
+
+    print(roles.id)
+    
+    dbID = 0
+    
+    if roles.id == "Administrator":
+        dbID = 4
+    elif roles.id == "Power Moderator":
+        dbID = 3
+    elif roles.name == "Moderator": # == os.getenv('MOD_ROLE_ID'):
+        dbID = 2
+    elif roles.id == "SuperUser":
+        dbID = 1
+    
+
+    print(dbID)
+
+    return dbID

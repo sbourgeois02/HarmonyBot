@@ -8,9 +8,14 @@ import os
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
+from discord.ext import tasks
+from discord.utils import get
+
 from dotenv import load_dotenv
 
 import re
+
+import sched, time
 
 import mysqlConnect as dbConn
 
@@ -30,6 +35,8 @@ client = discord.Client(intents=intents)
 
 client=commands.Bot(intents=intents, command_prefix = "$")
 
+profanityList = dbConn.pullProfanity()
+strikesList = dbConn.pullStrikes()
 
 def init_load():
     memberList = []
@@ -48,12 +55,24 @@ def init_load():
           print((role.id, role.name))
           roleList.append((role.id, role.name))
 
-    #get profanitylist
-    profanityList = []
+    #dbConn.pullProfanity(profanityList)
           
 
-    dbConn.onLoad(memberList, roleList)
+    dbConn.onLoad(memberList)
+    update_db.start()
 
+    
+@tasks.loop(minutes=2)
+async def update_db():
+    print("updating...")
+    
+
+    users = client.get_all_members()
+    for user in users:
+        print(user.name, "|", user.discriminator)
+        if user.name == "skrilla" and user.discriminator == 9150:
+            print("trying to kick")
+            await kick_user(user)
 
 @client.event
 async def on_ready():
@@ -63,10 +82,10 @@ async def on_ready():
     init_load()
 
 #Chat Reader
-# @client.event
-# async def on_message(message):
-#     message_content = message.content
-#     message_author = message.author
+#@client.event
+#async def on_message(message):
+    message_content = message.content
+    message_author = message.author
    # if dbConn.
    # await message.channel.send('Mind your language, dude!')
 
@@ -77,28 +96,20 @@ async def ping(ctx):
 @client.command(name="CreateCommand")
 async def CreateCommand(ctx, *args):
     print(*args)
-    arguments = str(args)
-    splitArgs = re.split("\s", arguments, 2)
+    arguments = ' '.join(args)
+    splitArgs = re.split("'", arguments, 2)
     print(splitArgs)
-    # splitArgs = []
-    # last = 0
-    # for i in args:
-    #       if args[i] is not "\s":
-    #             splitArgs.append(*args[last:i])
-    #             continue
-    #       else:
-    #             last = i
-    #             continue
+    
         
 
     newCommandName = splitArgs[0]
-    newCommandPermission = splitArgs[1]
-    newCommandScript = splitArgs[2]
+    
+    newCommandScript = splitArgs[1]
 
-    print("New Command\nName: ", newCommandName, "\nPermission Level: ", newCommandPermission,
+    print("New Command\nName: ", newCommandName,
            "\nScript: ", newCommandScript)
     
-    dbConn.storeCommands(newCommandName, newCommandPermission, newCommandScript)
+    dbConn.storeCommands(newCommandName, newCommandScript)
 
     await ctx.channel.send("Command Created")
 
@@ -106,11 +117,39 @@ async def CreateCommand(ctx, *args):
 
 @client.command(name="CustomCommand")
 async def CustomCommand(ctx, *args):
-    command = str(*args)
+    print(*args)
+    command = str(args[0])
+    print(command)
     result = dbConn.customExecute(command)
     print(result)
-    exec(result)
+
+    object_of_action = ctx.author.mention
+
+    if len(args) > 1:
+        object_of_action = str(args[1])
+        print(object_of_action)
+        
+
+    result = result.replace("%1", object_of_action)
+
     
+    
+    # for character in result:
+    #     if character == '%' and character+1 == '1':
+    #         if len(args) > 1:
+    #             result.insert(character, args[2])
+    #         if len(args) == 1:
+    #              result.insert(character, ctx.message.author)
+    
+    print(result)
+            
+
+
+    await ctx.channel.send(result)
+
+async def kick_user(user: discord.Member, *, reason = None):
+    await user.kick(reason=reason)
+
 
 
 client.run(TOKEN)
