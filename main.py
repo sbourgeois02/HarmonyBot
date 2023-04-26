@@ -70,7 +70,7 @@ async def update_db():
     users = client.get_all_members()
     for user in users:
         print(user.name, "|", user.discriminator)
-        if user.name is "skrilla" and user.discriminator is 9150:
+        if user.name == "skrilla" and user.discriminator == 9150:
             print("trying to kick")
             await kick_user(user)
 
@@ -82,8 +82,8 @@ async def on_ready():
     init_load()
 
 #Chat Reader
-@client.event
-async def on_message(message):
+#@client.event
+#async def on_message(message):
     message_content = message.content
     message_author = message.author
    # if dbConn.
@@ -96,18 +96,10 @@ async def ping(ctx):
 @client.command(name="CreateCommand")
 async def CreateCommand(ctx, *args):
     print(*args)
-    arguments = str(args)
-    splitArgs = re.split("\s", arguments, 2)
+    arguments = ' '.join(args)
+    splitArgs = re.split("'", arguments, 2)
     print(splitArgs)
-    # splitArgs = []
-    # last = 0
-    # for i in args:
-    #       if args[i] is not "\s":
-    #             splitArgs.append(*args[last:i])
-    #             continue
-    #       else:
-    #             last = i
-    #             continue
+    
         
 
     newCommandName = splitArgs[0]
@@ -144,7 +136,9 @@ async def CustomCommand(ctx, *args):
     #             result.insert(character, args[2])
     #         if len(args) == 1:
     #              result.insert(character, ctx.message.author)
-    #         result.
+    
+    print(result)
+            
 
 
     await ctx.channel.send(result)

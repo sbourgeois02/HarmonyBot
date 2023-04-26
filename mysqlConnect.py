@@ -145,6 +145,12 @@ def customExecute(commandName):
     #close database
     connection.close()
 
+    results = str(results)
+
+    results = results[2:len(results)-3]
+
+    print(results)
+
     return str(results)
 
 def pullProfanity():
