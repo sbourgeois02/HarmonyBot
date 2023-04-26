@@ -22,4 +22,27 @@
             <button onclick="window.location.href='modwords.php'">Modwords</button>
         </div>
     </div>
+    <div class="main">
+        <div class="content">
+            <h1>Modwords Data Table</h1>
+            <?php
+                include('process/displayModwordsTable.php');
+            ?>
+            <p></p>
+        </div>
+        <div class="content">
+            <h1>Add Bad Word</h1>
+            <form action="process/addModword.php" method="POST">
+                <input type="text" name="modword" placeholder="Modword">
+                <button type="submit" name="submit">Add Modword</button>
+            </form>
+        </div>
+        <div class="content">
+            <h1>Remove Bad Word</h1>
+            <form action="process/removeModword.php" method="POST">
+                <input type="text" name="modword" placeholder="Modword">
+                <button type="submit" name="submit">Remove Modword</button>
+            </form>
+        </div>
+    </div>
 </body>
