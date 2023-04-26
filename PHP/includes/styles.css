@@ -26,6 +26,13 @@ form {
   border-width: 4px;
   border-radius: 10px;
 }
+.content .script input {
+  width: 1000px;
+  padding-bottom: 200px;
+}
+.content .script input::placeholder {
+  position: absolute;
+}
 .symbols {
   position: relative;
   display: inline-block;

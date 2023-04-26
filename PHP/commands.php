@@ -27,11 +27,8 @@
             <h1>Commands Data Table</h1>
             <table>
                 <tr>
-                    <th>CommandID</th>
-                    <th>CommandInput</th>
-                    <th>CommandAction</th>
-                    <th>CommandOutput</th>
-                    <th>CommandMinRoleID</th>
+                    <th>Command Input</th>
+                    <th>Command Script</th>
                 </tr>
                 <?php
                     $sql = "SELECT * FROM commands;";
@@ -39,15 +36,8 @@
                     $resultCheck = mysqli_num_rows($result);
                     if ($resultCheck > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                            // get the RoleName from role table to display instead of RoleID
-                            $roleID = $row['CommandMinRoleID'];
-                            $roleSQL = "SELECT RoleName FROM role WHERE RoleID = $roleID;";
-                            $roleResult = mysqli_query($conn, $roleSQL);
-                            $roleName = mysqli_fetch_assoc($roleResult);
-                            $rName = $roleName['RoleName'];
-                            mysqli_free_result($roleResult);
                             // display the data
-                            echo "<tr><td>" . $row['CommandID'] . "</td><td>" . $row['CommandInput'] . "</td><td>" . $row['CommandAction'] . "</td><td>" . $row['CommandOutput'] . "</td><td>" . $rName . "</td></tr>";
+                            echo "<tr><td>" . $row['CommandInput'] . "</td><td>" . $row['CommandAction'] . "</td></tr>";
                         }
                     }
                 ?>
@@ -56,22 +46,15 @@
         <div class="content">
             <h1>Add Command</h1>
             <form action="../PHP/process/addCommand.php" method="post">
-                <input type="text" name="input" placeholder="Command Input">
-                <input type="text" name="action" placeholder="Command Action">
-                <input type="text" name="output" placeholder="Command Output">
-                <select name="role">
-                    <?php
-                        $sql = "SELECT * FROM role;";
-                        $result = mysqli_query($conn, $sql);
-                        $resultCheck = mysqli_num_rows($result);
-                        if ($resultCheck > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<option value='" . $row['RoleID'] . "'>" . $row['RoleName'] . "</option>";
-                            }
-                        }
-                    ?>
-                </select>
+                <input type="text" name="input" placeholder="User Input">
+                <p></p>
+                <div class="script">
+                    <input style="text-align: top" type="text" size="50" height="100px" name="action" placeholder="Command Script">
+                </div>
+                <p></p>
                 <button type="submit" name="submit">Add Command</button>
+                <p></p>
+            </form>
         </div>
     </div>
 </body>
