@@ -219,6 +219,29 @@ def updateStrikes(name, tag, numStrikes):
     #close database
     connection.close()
 
+def pull_user_roles():
+    connection = MySQLdb.connect(host=os.getenv('DB_HOST'),user=os.getenv('DB_USER'),passwd=os.getenv('DB_PASSWORD'),db=os.getenv('DB_SCHEMA'))
+    cursor = connection.cursor()
+    cursor.execute("select database();")
+    db = cursor.fetchone()
+
+    if db:
+        print("You're connected to database: ", db)
+    else:
+        print('Not connected.')
+
+    cursor.execute("select UserName, UserTag, UserRoleID from user")
+    roleInfo = cursor.fetchall()
+
+    print(roleInfo)
+
+     # Commit your changes in the database
+    connection.commit()
+    #close database
+    connection.close()
+
+    return roleInfo
+
 
 def convertRoleID(roles):
 
@@ -239,3 +262,21 @@ def convertRoleID(roles):
     print(dbID)
 
     return dbID
+
+def reconvertRoleID(intID):
+
+    print(intID)
+    idName = "User"
+    
+    if intID == 4:
+        idName = "Administrator"   
+    elif intID == 3:
+        idName = "Power Moderator"
+    elif intID == 2:
+        idName = "Moderator"
+    elif intID == 1:
+        idName = "SuperUser"
+
+    print(idName)
+
+    return idName

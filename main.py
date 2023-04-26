@@ -64,15 +64,53 @@ def init_load():
     
 @tasks.loop(minutes=2)
 async def update_db():
+    
     print("updating...")
     
+    userRoles = dbConn.pull_user_roles()
 
-    users = client.get_all_members()
-    for user in users:
-        print(user.name, "|", user.discriminator)
-        if user.name == "skrilla" and user.discriminator == 9150:
-            print("trying to kick")
-            await kick_user(user)
+    print(userRoles)
+
+    for guild in client.guilds:
+        for member in guild.members:
+            if len(member.roles) > 1:
+                memRoleID = dbConn.convertRoleID(member.roles[1])
+                print(member, member.roles[1].name)
+                print(memRoleID)
+            else:
+                memRoleID = dbConn.convertRoleID(member.roles[0])
+                print(member, member.roles[0].name)
+                print(memRoleID)
+
+            for user in userRoles:
+                if user[0] == member.name and user[1] == member.discriminator and user[2] != memRoleID:
+                    print('UPDATE THE ROLE!')
+
+                    if len(member.roles) > 1:
+                        role = get(guild.roles, name=member.roles[1].name)
+                        await member.remove_roles(role)
+                    else:
+                        role = get(guild.roles, name=member.roles[0].name)
+
+                    
+
+                    newRoleName = dbConn.reconvertRoleID(user[2])
+
+                    newRole = get(guild.roles, name=newRoleName)
+
+                    await member.add_roles(newRole)
+
+
+
+
+    
+
+    # users = client.get_all_members()
+    # for user in users:
+    #     print(user.name, "|", user.discriminator)
+    #     if user.name == "skrilla" and user.discriminator == 9150:
+    #         print("trying to kick")
+    #         await kick_user(user)
 
 @client.event
 async def on_ready():
@@ -84,8 +122,8 @@ async def on_ready():
 #Chat Reader
 #@client.event
 #async def on_message(message):
-    message_content = message.content
-    message_author = message.author
+    #message_content = message.content
+    #message_author = message.author
    # if dbConn.
    # await message.channel.send('Mind your language, dude!')
 
@@ -146,6 +184,8 @@ async def CustomCommand(ctx, *args):
 
 
     await ctx.channel.send(result)
+
+
 
 async def kick_user(user: discord.Member, *, reason = None):
     await user.kick(reason=reason)
