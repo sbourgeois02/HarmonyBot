@@ -22,4 +22,12 @@
             <button onclick="window.location.href='modwords.php'">Modwords</button>
         </div>
     </div>
+    <div class="main">
+        <div class="content">
+            <h1>Modwords Data Table</h1>
+            <?php
+                include('process/displayModwordsTable.php');
+            ?>
+            <p></p>
+        </div>
 </body>
